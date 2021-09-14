@@ -15,8 +15,10 @@ class AgencyTestCase(unittest.TestCase):
 
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = 'Movies2'
-        self.database_path = 'postgres://fsaiybxpanrcbo:8beaa59dfee430db65816a6bf6e6784e612c8b939c753614186c16c6159a3bd8@ec2-54-145-188-92.compute-1.amazonaws.com:5432/de5t8jek8d22it'
+        self.database_name = 'capstone'
+        self.database_path = 'postgresql://{}:{}@{}/{}'.format(
+                             'norah', '123456',
+                             'localhost:5432', self.database_name)
 
         setup_db(self.app, self.database_path)
 
@@ -58,7 +60,6 @@ class AgencyTestCase(unittest.TestCase):
         self.executive_producer = {
             "Authorization": "Bearer {}".format(os.environ.get('EXECUTIVE_PRODUCER_TOKEN'))
         }
-        
     def tearDown(self):
         """Executed after reach test"""
 

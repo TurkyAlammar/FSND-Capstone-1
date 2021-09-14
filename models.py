@@ -4,7 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 
-database_path = 'postgres://fsaiybxpanrcbo:8beaa59dfee430db65816a6bf6e6784e612c8b939c753614186c16c6159a3bd8@ec2-54-145-188-92.compute-1.amazonaws.com:5432/de5t8jek8d22it'
+database_path = os.environ['DATABASE_URL'] = 'postgres://timjcpwcrvoyjm:9c9893f05df1fe964295d8827cb83e01c772edf215457c6f65e2b9bf789e373c@ec2-3-219-111-26.compute-1.amazonaws.com:5432/dcosc463uh5uk3'
+if not database_path:
+    database_name = "capstone"
+    database_path = "postgresql://{}:{}@{}/{}".format('postgres',
+                                                      '112233',
+                                                      'localhost:5432',
+                                                      database_name)
+if database_path.startswith("postgres://"):
+     database_path = database_path.replace("postgres://", "postgresql://", 1)
+
 
 db = SQLAlchemy()
 

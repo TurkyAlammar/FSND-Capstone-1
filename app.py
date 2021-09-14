@@ -28,37 +28,40 @@ def create_app(test_config=None):
     # ----------------------------------------------------------------------------#
 
     @app.route('/')
-    def firstPage():
-        
-        return  'hello'
+    def get_greeting():
+        excited = os.environ['EXCITED']
+        greeting = "Hello"
+        if excited == 'true':
+            greeting = greeting + "!!!!!"
+        return  greeting
 
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def view_movies(payload):
-        query_all_movies = Movies.query.all()
-        if len(query_all_movies) == 0:
+        movies = Movies.query.all()
+        if len(movies) == 0:
             abort(404)
-        json = jsonify({'success': True, 'actors': [movie.format()
-                       for movie in query_all_movies]}), 200
-        return json
+
+        return jsonify({'success': True, 'actors': [movie.format()
+                       for movie in movies]}), 200
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
     def add_movies(payload):
         try:
-            get_data = request.get_json()
+            request_data = request.get_json()
             release = datetime.utcnow()
-            if 'title' not in get_data:
+            if 'title' not in request_data:
                 abort(400)
 
-            if 'release_date' in get_data:
-                release = get_data['release_date']
+            if 'release_date' in request_data:
+                release = request_data['release_date']
 
-            all_movies = Movies(title=get_data['title'], release=release)
-            all_movies.insert()
+            movie = Movies(title=request_data['title'], release=release)
+            movie.insert()
 
-            return jsonify({'success': True, 'movie': all_movies.format(),
-                        'movie_id': all_movies.id})
+            return jsonify({'success': True, 'movie': movie.format(),
+                        'movie_id': movie.id})
 
         except Exception:
             print(sys.exc_info())
