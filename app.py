@@ -29,9 +29,8 @@ def create_app(test_config=None):
 
     @app.route('/')
     def get_greeting():
-        greeting = "Hello"
-            greeting = greeting + "!!!!!"
-        return  greeting
+
+        return  " Hello "
 
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
