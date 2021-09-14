@@ -66,8 +66,6 @@ Jinja2==2.10.1
 jmespath==0.10.0
 jose==1.0.0
 Kivy==2.0.0
-kivy-deps.sdl2==0.3.1
-Kivy-Garden==0.1.4
 lazy-object-proxy==1.4.0
 Mako==1.1.4
 MarkupSafe==1.1.1
