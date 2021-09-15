@@ -4,16 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 
-database_path = os.environ['DATABASE_URL'] = 'postgres://timjcpwcrvoyjm:9c9893f05df1fe964295d8827cb83e01c772edf215457c6f65e2b9bf789e373c@ec2-3-219-111-26.compute-1.amazonaws.com:5432/dcosc463uh5uk3'
-if not database_path:
-    database_name = "capstone"
-    database_path = "postgresql://{}:{}@{}/{}".format('postgres',
-                                                      '112233',
-                                                      'localhost:5432',
-                                                      database_name)
-if database_path.startswith("postgres://"):
-     database_path = database_path.replace("postgres://", "postgresql://", 1)
-
+database_path = 'postgres://timjcpwcrvoyjm:9c9893f05df1fe964295d8827cb83e01c772edf215457c6f65e2b9bf789e373c@ec2-3-219-111-26.compute-1.amazonaws.com:5432/dcosc463uh5uk3'
 
 db = SQLAlchemy()
 
@@ -25,12 +16,7 @@ def setup_db(app, database_path = database_path ):
     db.init_app(app)
     db.create_all()
 
-    '''
-    Movies
-
-    '''
-
-
+    
 class Movies (db.Model):
     __tablename__ = 'movies'
 
